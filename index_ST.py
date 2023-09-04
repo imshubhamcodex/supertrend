@@ -72,7 +72,7 @@ def st_changes(data):
     filename = f"mplfinance_chart_{timestamp}.png"
     fig.savefig(filename)  
     send_img(filename)
-    send_message("*ALERT: SuperTrend Direction Changed on NSEI [15 min]*")
+    send_message("*SuperTrend Direction Changed on NSEI @ [15 min]*")
     
 
 def check_dates(data_frame, st_changes, data):

@@ -44,19 +44,18 @@ def analyze_news(url):
                     titles_and_scores.append((title, compound_score))
                     valid_article_count += 1
 
-                    if valid_article_count >= 5:
+                    if valid_article_count >= 4:
                         break
 
-        if len(sentiment_scores) == 5:
+        if len(sentiment_scores) == 4:
             if sentiment_scores != analyze_news.previous_scores:
                 text =""
                 for title, compound_score in titles_and_scores:
                     text += "*" + str(title) + "*\n"
+                    text += "-------------------------\n"
 
                 overall_sentiment = sum(sentiment_scores) / len(sentiment_scores)
-                text += f'*Overall Sentiment Score: {round(overall_sentiment,2)}*\n'
-                text += "-1 score : Strong negative sentiment\n"
-                text += "+1 score : Strong positive sentiment\n"
+                text += f'Trader Sentiment: -1 < [*{round(overall_sentiment,2)}*] < 1'
                 
                 # print(text)
                 send_message(text)
