@@ -52,10 +52,10 @@ def analyze_news(url):
                 text =""
                 for title, compound_score in titles_and_scores:
                     text += "*" + str(title) + "*\n"
-                    text += "-------------------------\n"
+                    text += "--------------------------------------------\n"
 
                 overall_sentiment = sum(sentiment_scores) / len(sentiment_scores)
-                text += f'Trader Sentiment: -1 < [*{round(overall_sentiment,2)}*] < 1'
+                text += "Sentiment : -1 < *" + str(round(overall_sentiment, 2)) + "* < 1"
                 
                 # print(text)
                 send_message(text)
