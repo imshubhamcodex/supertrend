@@ -11,9 +11,9 @@ from pytz import timezone
 from mercury_Bot import send_message, send_img
 
 # Fetch data
-def fetch_data(ticker="^NSEI", time_interval="15m"):
+def fetch_data(ticker="^NSEI", time_interval="1h"):
     end_date = datetime.today().date()
-    start_date = end_date - timedelta(days=7)
+    start_date = end_date - timedelta(days=300)
     data = yf.download(ticker, start=start_date, end=end_date, interval=time_interval)
     return data
 
@@ -23,7 +23,7 @@ def fetch_todays_data_from_YF():
     date_obj = datetime.strptime(current_datetime, "%Y-%m-%d")
     today_timestamp = str(date_obj.timestamp()).split('.')[0]
     current_timestamp = str(time.mktime(time.localtime())).split('.')[0]
-    # today_timestamp = str((datetime.now() - timedelta(days=3)).timestamp()).split('.')[0]  # TEST
+    # today_timestamp = str((datetime.now() - timedelta(days=5)).timestamp()).split('.')[0]  # TEST
     headers = {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
         "Accept-Encoding": "gzip, deflate, br",
@@ -139,7 +139,7 @@ def st_changes(data):
     filename = f"mplfinance_chart_{timestamp}.png"
     fig.savefig(filename)
     send_img(filename)
-    send_message("*SuperTrend Direction Changed on ^NSEI @ [15 min]*")
+    send_message("*SuperTrend Direction Changed on ^NSEI @ [1 hr]*")
     
 
 def main():
@@ -163,7 +163,7 @@ def main():
     
     if data.iloc[-1]['supertrend_diff'] > threshold:
         st_changes(data)
-        time.sleep(15 * 60)
+        time.sleep(60 * 60)
 
 
 def add_datetime_column(data):
@@ -184,7 +184,7 @@ while True:
             main()
             break
     
-    time.sleep(2 * 60)  # 60-second wait
+    time.sleep(1 * 60)  # 60-second wait
 
 
 
